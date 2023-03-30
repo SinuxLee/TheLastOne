@@ -240,7 +240,7 @@ cc.Class({
   },
   // methods
   move (dt) {
-    // this.node.rotation = 90 - cc.misc.radiansToDegrees(
+    // this.node.angle = -90 + cc.misc.radiansToDegrees(
     //     Math.atan2(this.moveDir.y, this.moveDir.x)
     // );
     if (!this.moveDir) return
@@ -392,10 +392,10 @@ cc.Class({
     this._gunDir = _dir
     this._aimDir = _dir
     if (!this._haveGun) return
-    this.gunNode.rotation = -cc.misc.radiansToDegrees(
+    this.gunNode.angle = cc.misc.radiansToDegrees(
       Math.atan2(_dir.y, _dir.x)
     )
-    const theAngle = 90 - this.gunNode.rotation
+    const theAngle = 90 + this.gunNode.angle
 
     if (theAngle > 180 || theAngle < 0) {
       this.gunNode.scaleY = -1
@@ -505,9 +505,9 @@ cc.Class({
         bullet1.setPosition(bulletPos)
         bullet2.setPosition(bulletPos)
         bullet3.setPosition(bulletPos)
-        bullet1.rotation = this.gunNode.rotation
-        bullet2.rotation = this.gunNode.rotation + 30
-        bullet3.rotation = this.gunNode.rotation - 30
+        bullet1.angle = this.gunNode.angle
+        bullet2.angle = this.gunNode.angle - 30
+        bullet3.angle = this.gunNode.angle + 30
         const cloneGunDir = cc.v2(this._gunDir)
         const bulletC1 = bullet1.getComponent('Bullet')
         bulletC1._belongTag = this._pbc.tag
@@ -534,7 +534,7 @@ cc.Class({
         const bulletPos = this.node.parent.parent.convertToNodeSpaceAR(this.gunNode.children[0].convertToWorldSpaceAR(cc.v2(0, 0)))
         bullet.parent = this.node.parent.parent
         bullet.setPosition(bulletPos)
-        bullet.rotation = this.gunNode.rotation
+        bullet.angle = this.gunNode.angle
         const bulletC = bullet.getComponent('Bullet')
         bulletC._belongTag = this._pbc.tag
         bulletC._belongName = this.thisName
