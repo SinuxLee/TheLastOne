@@ -1,4 +1,3 @@
-
 cc.Class({
   extends: cc.Component,
 
@@ -16,10 +15,12 @@ cc.Class({
   onLoad () {
     this._belongTagsArr = []
   },
+
   init (_index) {
     // console.log(_index)
     this.boxIndex = _index
   },
+
   update (dt) {
     if (this._hadOpen) return
 
@@ -45,6 +46,7 @@ cc.Class({
     }
     this.progressBar.progress = this._openTimer / 5
   },
+
   onBeginContact (contact, self, other) {
     if (other.tag == Tags.player || other.tag >= Tags.enemy) {
       this._beginOpen = true
@@ -75,6 +77,7 @@ cc.Class({
       if (this._belongTagsArr.indexOf(other.tag) != -1) {
         Tools.removeArray(this._belongTagsArr, other.tag)
       }
+      
       if (this._belongTagsArr.length == 0) {
         this._beginOpen = false
       }

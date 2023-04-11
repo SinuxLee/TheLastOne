@@ -55,6 +55,7 @@ cc.Class({
       mostKill: 0,
       avgLifeTime: 0
     }
+
     this.globalData = {
       days: 1,
       curDailyGot: false,
@@ -153,6 +154,7 @@ cc.Class({
       RobotName: []
     }
   },
+
   initSomeAttr () {
     cc.game.on(cc.game.EVENT_HIDE, () => {
       console.log('进入后台前存储了数据')
@@ -165,6 +167,7 @@ cc.Class({
     } else {
       this.globalData.curDailyGot = false
     }
+    
     let tempOnLinetime = cc.sys.localStorage.getItem('EatChicken_onLineTime')
     if (tempOnLinetime == null || tempOnLinetime == undefined || tempOnLinetime == '') {
       tempOnLinetime = 0

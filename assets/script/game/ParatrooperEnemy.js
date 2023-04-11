@@ -1,4 +1,3 @@
-
 cc.Class({
   extends: cc.Component,
 
@@ -9,6 +8,7 @@ cc.Class({
   init (_bg) {
     this._borderGroup = _bg
   },
+  
   update () {
     const newPos = this.node.position
     if (newPos.x < this._borderGroup[0].x) {

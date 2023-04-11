@@ -1,4 +1,3 @@
-
 cc.Class({
   extends: cc.Component,
 
@@ -22,12 +21,14 @@ cc.Class({
     bulletAtlas: cc.SpriteAtlas
 
   },
+
   onLoad () {
     this._pbc = this.node.getComponent(cc.PhysicsBoxCollider)
     // setTimeout(function () {
     //     this.node && this.node.destroy()
     // }.bind(this), 4000)
   },
+
   init (_data, _power, _isCrit, _isDef) {
     this.gunData = _data
     this._power = _power
@@ -43,6 +44,7 @@ cc.Class({
     this._pbc.enabled = true
     this._doFly = true
   },
+
   update (dt) {
     if (this._doFly) {
       this.node.x += this._flyDir.x * this._flySpeed * dt
@@ -60,12 +62,14 @@ cc.Class({
       this.doAnim()
     }
   },
+
   doAnim () {
     if (!this._onceExec) return
     this._onceExec = false
     this.node.runAction(cc.sequence(cc.delayTime(0.1), cc.callFunc(() => {
       this._pbc.enabled = false
     })))
+    
     const bsp = this.getComponent(cc.Sprite)
     let spIndex = 1
     this.node.runAction(cc.sequence(cc.callFunc(() => {
@@ -82,10 +86,11 @@ cc.Class({
       }
     }), cc.delayTime(0.1)).repeatForever())
   },
+
   onBeginContact (contact, self, other) {
     if (other.tag == this._belongTag) return
+
     if (other.tag == Tags.collider || other.tag == Tags.player || other.tag >= Tags.enemy) {
-      // console.log("子弹撞到了实体")
       if (this.gunData.weaponid == 1005 || this.gunData.weaponid === 1105) {
         this._pbc.size = new cc.size(120, 120)
         this._pbc.apply()

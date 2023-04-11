@@ -36,20 +36,11 @@ cc.Class({
     },
     _borderGroup: []
   },
-  onLoad () {
-  },
-  onEnable () {
 
-  },
-  onDisable () {
-
-  },
-  onDestroy () {
-
-  },
   init (_bg) {
     this._borderGroup = _bg
   },
+  
   // methods
   move () {
     const newPos = this.node.position.add(this.moveDir.mul(this._moveSpeed / 60))

@@ -278,6 +278,7 @@ cc.Class({
       this.gunNode.scaleY = 1
     }
   },
+  
   setArrowDir (_dir) {
     this.arrowNode.setPosition(cc.v2(this.arrowNode.parent.position).add(_dir.mul(100)))
     this.arrowNode.children[0].children[0].setPosition(cc.v2(this.arrowNode.children[0].position).add(_dir.mul(30)))
@@ -285,6 +286,7 @@ cc.Class({
       Math.atan2(_dir.y, _dir.x)
     )
   },
+
   update (dt) {
     if (this._isDie) return
     if (GameApp.dataManager.globalData.isInGame) {
@@ -326,12 +328,14 @@ cc.Class({
       this._aimTimer = 0
     }
   },
+
   lateUpdate (dt) {
     // this.mainC.node.setPosition(this.player.position)
     // this.testC.node.setPosition(this.player.position)
     GameApp.uiManager.mapCamera.node.setPosition(this.node.position)
     // this.mipmapCamera.node.setPosition(this.node.position)
   },
+
   checkGas (dt) {
     if (GameApp.dataManager.globalData.gasConfig != null) {
       const distance = cc.v2(GameApp.dataManager.globalData.gasConfig.safePosition).sub(cc.v2(this.node.position)).mag()
@@ -349,6 +353,7 @@ cc.Class({
       this._isGas = false
     }
   },
+
   aimState (event) {
     if (this._isDie) return
     if (!this._haveGun) return
@@ -357,6 +362,7 @@ cc.Class({
       this.aimToNearest()
     }
   },
+
   aimToNearest () {
     const allRoleArr = GameApp.dataManager.globalData.allRoleArr.concat()
     // for (let i = 0; i < allRoleArr.length; i++) {
@@ -387,6 +393,7 @@ cc.Class({
     }
     this.setGunDir(dir)
   },
+
   arrowToNearestGun () {
     const allGunArr = GameApp.dataManager.globalData.allGunArr.concat()
     let minDis = 1000000
@@ -408,6 +415,7 @@ cc.Class({
       this.setArrowDir(dir)
     }
   },
+
   shoot () {
     if (this._isDie) return
     if (!this._haveGun) return
@@ -475,12 +483,14 @@ cc.Class({
       GameApp.uiManager.getUI(GameApp.uiManager.uiRoot.children[0].name).getComponent(GameApp.uiManager.uiRoot.children[0].name).reloadBtnClick()
     }
   },
+
   reload () {
     if (this._isDie) return
     if (!this._haveGun) return
     GameApp.audioManager.playEffect('reload', 0.6)
     this.gunAnim.setAnimation(0, 'reload_' + this.gunData.skinname, false)
   },
+
   equipWeapon (_kind) {
     GameApp.audioManager.playEffect('pick_item', 0.6)
     this.gunData = GameApp.dataManager.jsonData.WeaponData[_kind]
@@ -502,9 +512,11 @@ cc.Class({
 
     // this.gunAnim.setAnimation(0, 'attack_' + this.gunData.skinname, false)
   },
+
   getItem () {
 
   },
+
   onBeginContact (contact, self, other) {
     if (self.tag == Tags.empty) return
     if (other.tag == Tags.item) {
@@ -544,6 +556,7 @@ cc.Class({
       this.beDamage(999, -2)
     }
   },
+
   onEndContact (contact, self, other) {
     if (self.tag == Tags.empty) return
     if (other.tag == Tags.item) {
@@ -572,6 +585,7 @@ cc.Class({
     }
     this.equipWeapon(_kind)
   },
+
   beDamage (_power, _belongIndex, _belongName, _isCrit) {
     GameApp.uiManager.showGameObject('InfoLabel', (node) => {
       const originPos = node.parent.convertToNodeSpaceAR(this.node.convertToWorldSpaceAR(cc.v2(0.5, 0.5)))
@@ -594,6 +608,7 @@ cc.Class({
       }))
       node.runAction(seq)
     }, this.node.parent.parent)
+
     if (GameApp.dataManager.reduceHp(_power)) {
       // console.log('收到子弹攻击')
     } else {
@@ -638,6 +653,7 @@ cc.Class({
           GameApp.dataManager.globalData.allGunArr.push(node)
         })
       }
+
       const arr = GameApp.dataManager.userData.choosedSkinId < 21 ? ['dead'] : ['dead2']
       this.roleAnim.setAnimation(0, arr[0], false)
       this.gunNode.active = false
@@ -646,6 +662,7 @@ cc.Class({
       GameApp.uiManager.getPopup('OverPopup') == null && GameApp.uiManager.showPopup('OverPopup', (node) => {
         node.getComponent('OverPopup').init(false, theRank + 1)
       })
+      
       GameApp.eventManager.emit(EventNames.EVENT_SHOW_ALLROLENUM_UI)
     }
   }

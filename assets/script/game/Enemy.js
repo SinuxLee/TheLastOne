@@ -115,6 +115,7 @@ cc.Class({
     _inGasTimer: 0,
     _inGasInterval: 0.5
   },
+
   onLoad () {
     this.getItemAttrArr = [{
       rank: 0,
@@ -129,6 +130,7 @@ cc.Class({
       rank: 0,
       item: null
     }]// 伤害，防御，移速，暴击
+
     this.equipItemAttr = [0, 0, 0, 0]// (装备带来的属性)伤害，防御，移速，暴击
 
     GameApp.eventManager.on(EventNames.EVENT_THEGAMESTART, this.theGameStart.bind(this))
@@ -138,15 +140,12 @@ cc.Class({
     this._pbc = this.getComponent(cc.PhysicsBoxCollider)
     // this._desTime = Tools.randomNum(1, 3)
   },
-  onEnable () {
 
-  },
-  onDisable () {
-  },
   onDestroy () {
     GameApp.eventManager.removeListener(EventNames.EVENT_THEGAMESTART)
     GameApp.eventManager.removeListener(EventNames.EVENT_NOTIFY_ENEMY_MAPBOX)
   },
+
   init (_index, _names) {
     // this.schedule(() => {
     //     console.log(GameApp.dataManager.userData.choosedSkinId)
@@ -163,6 +162,7 @@ cc.Class({
     this.setSpeedType(SpeedType.FAST)
     // console.log(this._pbc.tag)
   },
+
   addSkinAttr () {
     const curSkinData = this.skinData
     this._maxHp = this._curHp = GameApp.dataManager.userData.baseHp + Math.floor(GameApp.dataManager.userData.baseHp * (curSkinData.att_hpmax / 100))
@@ -173,17 +173,21 @@ cc.Class({
     this._curDef = GameApp.dataManager.userData.baseDef + curSkinData.att_defense / 100
     this._curRecovery = GameApp.dataManager.userData.baseRecovery + curSkinData.att_recovery / 100
   },
+
   roleProtect () {
     this._isProtect = true
     this.node.opacity = 0
   },
+
   theGameStart () {
     this.node.opacity = 255
     this._isProtect = false
   },
+
   notifyMapBox () {
     this._mapNoBox = false
   },
+
   enemyEquipBoxItem () {
     const arr = [0, 1, 2, 3]
     let _selectIndex = 0
@@ -204,6 +208,7 @@ cc.Class({
     this.equipItemAttr[_selectIndex] = this.getItemAttrArr[_selectIndex].item.attr
     this.updateStarShow()
   },
+
   updateStarShow () {
     let _sum = 0
     for (let i = 0; i < 4; i++) {
@@ -219,6 +224,7 @@ cc.Class({
       this.starNode.active = true
     }
   },
+
   initNameShow (_names) {
     this.thisName = _names
     this.nameUI.string = _names
@@ -228,6 +234,7 @@ cc.Class({
     // var colorIndex = Math.floor((this.skinData.skinid - 1) / 5)
     // this.nameUI.node.color = new cc.Color().fromHEX(NameColor[colorIndex]);
   },
+
   initSkinShow () {
     if (this._choosedSkinId < 21) {
       this.roleAnim.skeletonData = GameApp.uiManager.normalSkinData
@@ -238,6 +245,7 @@ cc.Class({
     const arr = this._choosedSkinId < 21 ? ['await'] : ['await_fight_1']
     this.roleAnim.setAnimation(0, arr[0], true)
   },
+
   // methods
   move (dt) {
     // this.node.angle = -90 + cc.misc.radiansToDegrees(
@@ -254,6 +262,7 @@ cc.Class({
     this.node.setPosition(newPos)
     // this.roleAnim.node.setPosition(0, 0)
   },
+
   doParser (dt) {
     this._desTime -= dt
     this._desTime2 -= dt
@@ -309,6 +318,7 @@ cc.Class({
       }
     }
   },
+
   searchGun () {
     const allGunArr = GameApp.dataManager.globalData.allGunArr.concat()
     let minDis = 1000000
@@ -335,6 +345,7 @@ cc.Class({
     }
     this.setDir(dir)
   },
+
   searchBox () {
     const allBoxArr = GameApp.dataManager.globalData.allBoxArr.concat()
     let minDis = 1000000
@@ -365,6 +376,7 @@ cc.Class({
     }
     this.setDir(dir)
   },
+
   setSpeedType (_type) {
     if (this._isDie) return
     if (this._speedType != _type) {
@@ -374,6 +386,7 @@ cc.Class({
       this.roleAnim.setAnimation(0, arr[_type], true)
     }
   },
+
   setDir (_dir) {
     if (this._isDie) return
     if (_dir && _dir.mag() == 0) {
@@ -385,6 +398,7 @@ cc.Class({
     if (this._isAim) return
     this.setGunDir(_dir)
   },
+
   setGunDir (_dir) {
     if (_dir == null) {
       _dir = this.moveDir
@@ -403,6 +417,7 @@ cc.Class({
       this.gunNode.scaleY = 1
     }
   },
+
   update (dt) {
     if (this._isDie) return
     this.doParser(dt)
@@ -445,12 +460,14 @@ cc.Class({
       }
     }
   },
+
   lateUpdate (dt) {
     // this.mainC.node.setPosition(this.player.position)
     // this.testC.node.setPosition(this.player.position)
     // GameApp.uiManager.mapCamera.node.setPosition(this.node.position)
     // this.mipmapCamera.node.setPosition(this.node.position)
   },
+
   aimToNearest () {
     // return
     if (!this._haveGun) {
@@ -549,6 +566,7 @@ cc.Class({
       this.reload()
     }
   },
+
   reduceAmo () {
     const a = this._curAmoNum - 1
     if (a < 0) {
@@ -561,6 +579,7 @@ cc.Class({
       return true
     }
   },
+  
   reload () {
     if (!this._haveGun) return
     if (this._reloadFlag) return

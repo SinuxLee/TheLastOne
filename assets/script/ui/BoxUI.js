@@ -14,19 +14,23 @@ cc.Class({
       visible: false
     }
   },
+
   onLoad () {
     GameApp.eventManager.on(EventNames.EVENT_UPDATE_COIN_SHOW, this.updateUIShow.bind(this))
     this.updateUIShow()
   },
+
   onDestroy () {
     GameApp.eventManager.removeListener(EventNames.EVENT_UPDATE_COIN_SHOW)
   },
+
   updateUIShow () {
     this.coinUI.string = GameApp.dataManager.userData.coinNum
     this.needCoinUI.string = GameApp.dataManager.userData.box1NeedCoinNum
     this.box1CoinRewardUI.string = GameApp.dataManager.userData.box1RewardCoinNum[0] + '~' + GameApp.dataManager.userData.box1RewardCoinNum[1]
     this.box2CoinRewardUI.string = GameApp.dataManager.userData.box2RewardCoinNum[0] + '~' + GameApp.dataManager.userData.box2RewardCoinNum[1]
   },
+  
   oneBtnClick () {
     if (!this.onceClick) return
     this.onceClick = false

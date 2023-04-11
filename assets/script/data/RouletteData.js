@@ -14,7 +14,8 @@ const RouletteData = {
   load: function () {
     for (let i = 1; i < 9; i++) {
       this.zhuanpanData[i] = {
-        start: (this.num - (9 - i)) * this.ALLROATE / this.num - this.offset + this.deviation, end: (this.num - (8 - i)) * this.ALLROATE / this.num - this.offset - this.deviation
+        start: (this.num - (9 - i)) * this.ALLROATE / this.num - this.offset + this.deviation,
+        end: (this.num - (8 - i)) * this.ALLROATE / this.num - this.offset - this.deviation
       }
     }
   }

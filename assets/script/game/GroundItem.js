@@ -1,4 +1,3 @@
-
 cc.Class({
   extends: cc.Component,
 
@@ -13,10 +12,12 @@ cc.Class({
     this.getComponent(cc.PhysicsBoxCollider).tag = Tags.item
     this.doAnim()
   },
+
   doAnim () {
     this.node.children[0].runAction(cc.sequence(cc.fadeOut(0.6), cc.fadeIn(0.3)).repeatForever())
     this.node.children[1].runAction(cc.sequence(cc.moveBy(0.5, cc.v2(0, 10)), cc.moveBy(0.5, cc.v2(0, -10))).repeatForever())
   },
+  
   init (_param, _spriteFrame) {
     _param && (this.itemType = _param)
     // if (true) {
